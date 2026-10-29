@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class GameController {
 
     @GetMapping("/home")
-    public String home(@RequestParam (name = "name", required = false, defaultValue = "käyttäjä") String name, Model model) {
+    public String home(@RequestParam (name = "name", defaultValue = "käyttäjä") String name, Model model) {
         model.addAttribute("name", name);
         return "home";
     }   
