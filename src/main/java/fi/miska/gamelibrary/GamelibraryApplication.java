@@ -34,12 +34,13 @@ public class GamelibraryApplication {
 				Genre action = genreRepository.save(new Genre("ACTION"));
 
 				Platform pc = platformRepository.save(new Platform("PC"));
-				Platform ps5 = platformRepository.save(new Platform("ps5"));
+				Platform PS5 = platformRepository.save(new Platform("PS5"));
 
 				Developer fromSoftware = developerRepository.save(new Developer("fromSoftware"));
 
-				gameRepository.save(new Game("Elden Ring", List.of(fromSoftware), "Open world action RPG",
-				 2022, List.of(pc,ps5), List.of(rpg,action)));
+				gameRepository.save(new Game("Elden Ring", fromSoftware, "Open world action RPG",
+				 2022, List.of(pc,PS5), List.of(rpg,action)));
+
 			};
 		}
 

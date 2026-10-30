@@ -6,7 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Developer {
@@ -19,7 +19,7 @@ public class Developer {
     private String description;
 
     // Developerilla voi olla monta peliä
-    @ManyToMany(mappedBy = "developers")
+    @OneToMany (mappedBy = "developer")
     private List<Game> games;
 
     public Developer() {

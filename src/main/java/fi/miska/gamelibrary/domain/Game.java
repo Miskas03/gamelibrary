@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity // Tämä kertoo JPA että tee tästä taulu
 public class Game {
@@ -24,17 +25,17 @@ public class Game {
     // Yksi peli voi olla monella platformilla
     @ManyToMany
     private List<Platform> platforms;
-    @ManyToMany
-    private List<Developer> developers;
+    @ManyToOne
+    private Developer developer;
 
     // Konstruktorit
     public Game() { // JPA tekee tyhjän olion ja täyttää kentät tietokannan tiedoilla
     }
 
-    public Game(String name, List<Developer> developers, String info, int releaseDate, List<Platform> platforms,
+    public Game(String name, Developer developer, String info, int releaseDate, List<Platform> platforms,
             List<Genre> genres) {
         this.name = name;
-        this.developers = developers;
+        this.developer = developer;
         this.info = info;
         this.releaseDate = releaseDate;
         this.platforms = platforms;
@@ -57,12 +58,12 @@ public class Game {
         this.name = name;
     }
 
-    public List<Developer> getDevelopers() {
-        return developers;
+    public Developer getDeveloper() {
+        return developer;
     }
 
-    public void setDevelopers(List<Developer> developers) {
-        this.developers = developers;
+    public void setDeveloper(Developer developer) {
+        this.developer = developer;
     }
 
     public String getInfo() {
