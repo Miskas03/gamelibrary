@@ -32,14 +32,19 @@ public class GamelibraryApplication {
 				// Tallennetaan ensin genre, platform ja dev jotta game voi napata ne mukaan
 				Genre rpg = genreRepository.save(new Genre("RPG"));
 				Genre action = genreRepository.save(new Genre("ACTION"));
+				Genre fps = genreRepository.save(new Genre("FPS"));
+				Genre puzzle = genreRepository.save(new Genre("PUZZLE"));
 
 				Platform pc = platformRepository.save(new Platform("PC"));
 				Platform PS5 = platformRepository.save(new Platform("PS5"));
 
 				Developer fromSoftware = developerRepository.save(new Developer("fromSoftware"));
-
+				Developer electronicArts = developerRepository.save(new Developer("Electronic Arts"));
 				gameRepository.save(new Game("Elden Ring", fromSoftware, "Open world action RPG",
 				 2022, List.of(pc,PS5), List.of(rpg,action)));
+
+				gameRepository.save(new Game("Battlefield", electronicArts, "Shooter game",
+				 2008, List.of(pc,PS5), List.of(fps,action)));
 
 			};
 		}
