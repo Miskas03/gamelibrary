@@ -44,7 +44,7 @@ public class GamelibraryApplication {
 				 2022, List.of(pc,PS5), List.of(rpg,action)));
 
 				gameRepository.save(new Game("Battlefield", electronicArts, "Shooter game",
-				 2008, List.of(pc,PS5), List.of(fps,action)));
+				 2008, List.of(pc), List.of(fps,action)));
 
 			};
 		}

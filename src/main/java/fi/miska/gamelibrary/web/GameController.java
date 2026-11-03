@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import fi.miska.gamelibrary.domain.DeveloperRepository;
 import fi.miska.gamelibrary.domain.GameRepository;
 import fi.miska.gamelibrary.domain.Genre;
+import fi.miska.gamelibrary.domain.Game;
 import fi.miska.gamelibrary.domain.GenreRepository;
 import fi.miska.gamelibrary.domain.PlatformRepository;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,18 +44,18 @@ public class GameController  {
         return "home";
     }   
 
-    @RequestMapping("/about")
-    public String about() {
-        return "about";
-    }
 
     @GetMapping("/games")
-    public String games(Model model){
-        model.addAttribute("games", gameRepository.findAll());
-        model.addAttribute("developers", developerRepository.findAll());
-        model.addAttribute("genres", genreRepository.findAll());
-        model.addAttribute("platforms", platformRepository.findAll());
+    public String games(Model model){ // haetaan kaikki pelit tietokannasta/repository ja viedään ne templateen avaimella games
+       model.addAttribute("games", gameRepository.findAll());
         return "games";
+    }
+
+    @GetMapping(value = "/games/{id}")
+    public String gameInfo(@PathVariable Long id, Model model) {
+        Game game = gameRepository.findById(id).orElseThrow();
+        model.addAttribute("game", game);
+        return "gameinfo";
     }
 
     @GetMapping("/")
