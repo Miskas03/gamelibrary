@@ -18,15 +18,26 @@
     <form th:object="${game}" th:action="@{/admin/games/savegame}" method="post">
 
         <label for="name">Name</label>
-        <input type="text" id="name" th:field="*{name}" class="form-control" />
+        <input type="text" id="name" th:field="*{name}" />
 
         <label for="info">Info</label>
-        <input type="text" id="info" th:field="*{info}" class="form-control" />
+        <input type="text" id="info" th:field="*{info}" />
 
         <label for="developer">Developer</label>
         <select th:field="*{developer}">
             <option th:each="developer : ${developers}" th:value="${developer.id}" th:text="${developer.name}"></option>
         </select>
+
+        <label for="genre">Genres:
+            <input type="checkbox" th:each="genre : ${genres}" th:text="${genre.name}" th:value="${genre.id}"
+                th:field="*{genres}">
+        </label>
+
+        <label for="platform">Platforms:
+            <input type="checkbox" th:each="platform : ${platforms}" th:text="${platform.name}"
+                th:value="${platform.id}" th:field="*{platforms}">
+        </label>
+
 
         <label for="releaseDate">Release date</label>
         <input type="date" id="releaseDate" th:field="*{releaseDate}" class="form-control" />

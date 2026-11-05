@@ -18,8 +18,15 @@
             </option>
         </select>
         <label for="releaseDate">Release date</label>
-        <input type="date" id="releaseDate" th:field="*{releaseDate}" class="form-control" />
+        <input type="date" id="releaseDate" th:field="*{releaseDate}"/>
 
+        <label for="genre">Genres:
+        <input type="checkbox" th:each="genre : ${genres}" th:text="${genre.name}" th:field="*{genres}" th:value="${genre.id}">
+        </label>
+
+        <label for="platforms">Platforms:
+            <input type="checkbox" th:each="platform : ${platforms}" th:text="${platform.name}" th:field="*{platforms}" th:value="${platform.id}">
+        </label>
         <button type="submit">Save</button>
         <a th:href="@{/games}">Cancel</a>
 

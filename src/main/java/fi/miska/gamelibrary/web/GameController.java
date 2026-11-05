@@ -80,6 +80,8 @@ public class GameController  {
     public String editGame(@PathVariable Long id, Model model){
         Game game = gameRepository.findById(id).orElseThrow();
         model.addAttribute("developers", developerRepository.findAll());
+        model.addAttribute("genres", genreRepository.findAll());
+        model.addAttribute("platforms", platformRepository.findAll());
         model.addAttribute("game", game);
         return "editgame";
     }
