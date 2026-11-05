@@ -15,12 +15,12 @@ import fi.miska.gamelibrary.domain.Platform;
 import fi.miska.gamelibrary.domain.PlatformRepository;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 
 @Controller
 
@@ -75,6 +75,27 @@ public class GameController  {
         gameRepository.save(game);
         return "redirect:/games";
     }
+
+    @GetMapping("/admin/games/edit/{id}")
+    public String editGame(@PathVariable Long id, Model model, Developer developer){
+        Game game = gameRepository.findById(id).orElseThrow();
+        model.addAttribute("game", game);
+        return "editgame";
+    }
+
+    @PostMapping("/admin/games/edit/{id}")
+        public String updateGame(@ModelAttribute Game game){
+            gameRepository.save(game);
+            return "redirect:/games";
+        }
+    
+
+    @PostMapping("/admin/games/delete/{id}")
+    public String deleteGame(@PathVariable Long id){
+        gameRepository.deleteById(id);
+        return "redirect:/games";
+    }
+    
     
 
 

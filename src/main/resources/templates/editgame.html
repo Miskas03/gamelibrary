@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <title>Edit Game</title>
+</head>
+
+<body>
+    <h1>Edit Game</h1>
+    <form th:action="@{/admin/games/edit/{id}(id=${game.id})}" th:object="${game}" method="post">
+        <label for="name">Name: <input type="text" th:field="*{name}"></label>
+        <label for="info">Info: <input type="text" th:field="*{info}"></label>
+        <label for="developer">Developer:</label>
+        <select th:field="*{developer}">
+            <option th:each="developer : ${developers}" th:value="${developer.id}" th:text="${developer.name}">
+            </option>
+        </select>
+        <label for="releaseDate">Release date</label>
+        <input type="date" id="releaseDate" th:field="*{releaseDate}" class="form-control" />
+
+        <button type="submit">Save</button>
+        <a th:href="@{/games}">Cancel</a>
+
+    </form>
+
+</body>
+
+</html>

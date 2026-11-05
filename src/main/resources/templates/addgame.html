@@ -6,31 +6,31 @@
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 
-    <form th:action="@{/games}" method="get">
-        <button type="get">Back to Games</button>
-    </form>
+
 </head>
 
 <body>
+
+    <form th:action="@{/games}" method="get">
+        <button type="submit">Back to Games</button>
+    </form>
     <h2>Add game</h2>
     <form th:object="${game}" th:action="@{/admin/games/savegame}" method="post">
+
         <label for="name">Name</label>
         <input type="text" id="name" th:field="*{name}" class="form-control" />
+
         <label for="info">Info</label>
         <input type="text" id="info" th:field="*{info}" class="form-control" />
-        <label for ="developer">Developer</label>
-        <select th:field = "*{developer}">
-        <option th:each = "developer : ${developers}" th:value="${developer.id}" th:text="${developer.name}"></option>
+
+        <label for="developer">Developer</label>
+        <select th:field="*{developer}">
+            <option th:each="developer : ${developers}" th:value="${developer.id}" th:text="${developer.name}"></option>
         </select>
-      <label for="releaseDate">Release date</label>
-            <input type="date" id="releaseDate" th:field="*{releaseDate}" class="form-control"/>
-       <!--         <label for="title">Publication year</label>
-            <input type="text" id="publicationYear" th:field="*{publicationYear}" class="form-control"/>
-            <select name = "category">
-                <option th:each = "cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}">
-                </option>
-            </select>
-            -->
+
+        <label for="releaseDate">Release date</label>
+        <input type="date" id="releaseDate" th:field="*{releaseDate}" class="form-control" />
+
         <input type="submit" value="Save">
     </form>
 </body>

@@ -4,9 +4,9 @@
 <head>
     <title>Games</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <form th:action="@{/games}" method="get">
-            <button type="get">Back to Games</button>
-        </form>
+    <form th:action="@{/games}" method="get">
+        <button type="get">Back to Games</button>
+    </form>
 </head>
 
 <body>
@@ -30,15 +30,27 @@
             <tr>
                 <!-- <td th:text="${game.name}"></td> -->
                 <td th:text="${game.info}"></td>
-                <td th:text="${game.developer.name}"></td>
+                <td th:text="${game.developer?.name}"></td>
                 <td th:text="${game.releaseDate}"></td>
 
-                <td>    <!-- Tässä käydään genres listalta läpi genret jotta löydetään kaikki pelin genret, -->
+                <td> <!-- Tässä käydään genres listalta läpi genret jotta löydetään kaikki pelin genret, -->
                     <span th:each="genre : ${game.genres}" th:text="${genre.name} + ' '"></span>
                 </td>
 
                 <td>
                     <span th:each="platform : ${game.platforms}" th:text="${platform.name} + ' '"></span>
+                </td>
+                <td>
+                    <form th:action="@{/admin/games/edit/{id}(id=${game.id})}"
+                    method="get">
+                    <button type="submit">Edit</button>
+                </form>
+                </td>
+                <td>
+                <form th:action="@{/admin/games/delete/{id}(id=${game.id})}"
+                    method="post">
+                    <button type="submit">Delete</button>
+                </form>
                 </td>
             </tr>
 
