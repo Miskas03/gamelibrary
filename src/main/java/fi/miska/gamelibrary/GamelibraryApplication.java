@@ -1,5 +1,6 @@
 package fi.miska.gamelibrary;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
@@ -41,10 +42,10 @@ public class GamelibraryApplication {
 				Developer fromSoftware = developerRepository.save(new Developer("fromSoftware"));
 				Developer electronicArts = developerRepository.save(new Developer("Electronic Arts"));
 				gameRepository.save(new Game("Elden Ring", fromSoftware, "Open world action RPG",
-				 2022, List.of(pc,PS5), List.of(rpg,action)));
+				 LocalDate.of(2022, 2, 25), List.of(pc,PS5), List.of(rpg,action)));
 
 				gameRepository.save(new Game("Battlefield", electronicArts, "Shooter game",
-				 2008, List.of(pc), List.of(fps,action)));
+				 LocalDate.of(2011, 10, 25), List.of(pc), List.of(fps,action)));
 
 			};
 		}

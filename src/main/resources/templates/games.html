@@ -4,6 +4,10 @@
 <head>
     <title>Games</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <form th:action="@{/admin/games/addgame}" method="get">
+            <button type="get">Add game</button>
+        </form>
 </head>
 
 <body>
@@ -16,7 +20,7 @@
                 <th>Game</th>
                 <th>Info</th>
                 <th>Developer</th>
-                <th>Year</th>
+                <th>Release Date</th>
                 <th>Genre</th>
                 <th>Platform</th>
             </tr>

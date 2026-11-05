@@ -5,15 +5,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import fi.miska.gamelibrary.domain.Developer;
 import fi.miska.gamelibrary.domain.DeveloperRepository;
 import fi.miska.gamelibrary.domain.GameRepository;
 import fi.miska.gamelibrary.domain.Genre;
 import fi.miska.gamelibrary.domain.Game;
 import fi.miska.gamelibrary.domain.GenreRepository;
+import fi.miska.gamelibrary.domain.Platform;
 import fi.miska.gamelibrary.domain.PlatformRepository;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,6 +60,23 @@ public class GameController  {
         model.addAttribute("game", game);
         return "gameinfo";
     }
+
+    @GetMapping("/admin/games/addgame")
+    public String addGame(Model model){
+        model.addAttribute("game", new Game());
+        model.addAttribute("developers", developerRepository.findAll());
+        model.addAttribute("genres", genreRepository.findAll());
+        model.addAttribute("platforms", platformRepository.findAll());
+        return "addgame";
+        }
+
+    @PostMapping("/admin/games/savegame")
+    public String saveGame(Game game){
+        gameRepository.save(game);
+        return "redirect:/games";
+    }
+    
+
 
     @GetMapping("/")
     public String redirect(){

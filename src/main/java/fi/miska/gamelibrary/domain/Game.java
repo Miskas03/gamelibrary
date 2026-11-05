@@ -1,6 +1,10 @@
 package fi.miska.gamelibrary.domain;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +21,9 @@ public class Game {
     private Long id;
     private String name;
     private String info;
-    private int releaseDate;
+
+    @DateTimeFormat(iso =DateTimeFormat.ISO.DATE)
+    private LocalDate releaseDate;
 
     // Yksi peli voi kuulua moneen genreen
     @ManyToMany
@@ -32,7 +38,9 @@ public class Game {
     public Game() { // JPA tekee tyhjän olion ja täyttää kentät tietokannan tiedoilla
     }
 
-    public Game(String name, Developer developer, String info, int releaseDate, List<Platform> platforms,
+
+    // Valmiin testidatan luonti, id puuttuu sillä tietokanta antaa sen tallentaessa
+    public Game(String name, Developer developer, String info, LocalDate releaseDate, List<Platform> platforms,
             List<Genre> genres) {
         this.name = name;
         this.developer = developer;
@@ -74,11 +82,11 @@ public class Game {
         this.info = info;
     }
 
-    public int getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(int releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 
