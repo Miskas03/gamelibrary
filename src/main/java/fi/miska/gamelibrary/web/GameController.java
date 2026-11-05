@@ -77,8 +77,9 @@ public class GameController  {
     }
 
     @GetMapping("/admin/games/edit/{id}")
-    public String editGame(@PathVariable Long id, Model model, Developer developer){
+    public String editGame(@PathVariable Long id, Model model){
         Game game = gameRepository.findById(id).orElseThrow();
+        model.addAttribute("developers", developerRepository.findAll());
         model.addAttribute("game", game);
         return "editgame";
     }
