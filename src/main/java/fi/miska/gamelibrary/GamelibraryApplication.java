@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import fi.miska.gamelibrary.domain.Developer;
 import fi.miska.gamelibrary.domain.DeveloperRepository;
@@ -16,6 +17,8 @@ import fi.miska.gamelibrary.domain.Genre;
 import fi.miska.gamelibrary.domain.GenreRepository;
 import fi.miska.gamelibrary.domain.Platform;
 import fi.miska.gamelibrary.domain.PlatformRepository;
+import fi.miska.gamelibrary.domain.User;
+import fi.miska.gamelibrary.domain.UserRepository;
 
 @SpringBootApplication
 public class GamelibraryApplication {
@@ -27,8 +30,13 @@ public class GamelibraryApplication {
 	// TESTI DATA TESTAUSTA VARTEN
 	@Bean
 	public CommandLineRunner testData(GenreRepository genreRepository, PlatformRepository platformRepository,
-			DeveloperRepository developerRepository, GameRepository gameRepository) {
+			DeveloperRepository developerRepository, GameRepository gameRepository, UserRepository userRepository) {
 		return (args) -> {
+
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+			userRepository.save(new User("user", encoder.encode("user"), "USER"));
+			userRepository.save(new User("admin", encoder.encode("admin"), "ADMIN"));
 
 			// Tallennetaan ensin genre, platform ja dev jotta game voi napata ne mukaan
 			Genre rpg = genreRepository.save(new Genre("RPG"));

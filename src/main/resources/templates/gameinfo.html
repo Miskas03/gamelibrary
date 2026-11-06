@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <title>Games</title>
@@ -10,6 +10,14 @@
 </head>
 
 <body>
+
+    <form sec:authorize="!isAuthenticated()" th:action="@{/login}" method="get">
+        <input type ="submit" value="Sign in"/>
+    </form>
+
+    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign out"/>
+        </form>
 
     <h1 th:text="${game.name}">Game Info</h1>
     <table cellpadding="10">
@@ -41,13 +49,13 @@
                     <span th:each="platform : ${game.platforms}" th:text="${platform.name} + ' '"></span>
                 </td>
                 <td>
-                    <form th:action="@{/admin/games/edit/{id}(id=${game.id})}"
+                    <form sec:authorize="hasAuthority('ADMIN')" th:action="@{/admin/games/edit/{id}(id=${game.id})}"
                     method="get">
                     <button type="submit">Edit</button>
                 </form>
                 </td>
                 <td>
-                <form th:action="@{/admin/games/delete/{id}(id=${game.id})}"
+                <form sec:authorize="hasAuthority('ADMIN')" th:action="@{/admin/games/delete/{id}(id=${game.id})}"
                     method="post">
                     <button type="submit">Delete</button>
                 </form>

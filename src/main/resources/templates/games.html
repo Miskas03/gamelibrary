@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <title>Games</title>
@@ -10,8 +10,16 @@
 
 <body>
 
-    <form th:action="@{/admin/games/addgame}" method="get">
+    <form sec:authorize="isAuthenticated()" th:action="@{/admin/games/addgame}" method="get">
             <button type="get">Add game</button>
+        </form>
+
+    <form sec:authorize="!isAuthenticated()" th:action="@{/login}" method="get">
+        <input type ="submit" value="Sign in"/>
+    </form>
+
+    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign out"/>
         </form>
 
     <h1 th:text="'Game library'">Game library</h1>

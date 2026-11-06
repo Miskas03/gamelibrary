@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <title>AddGame</title>
@@ -10,6 +10,7 @@
 </head>
 
 <body>
+
 
     <form th:action="@{/games}" method="get">
         <button type="submit">Back to Games</button>
@@ -28,20 +29,29 @@
             <option th:each="developer : ${developers}" th:value="${developer.id}" th:text="${developer.name}"></option>
         </select>
 
-        <label for="genre">Genres:
-            <input type="checkbox" th:each="genre : ${genres}" th:text="${genre.name}" th:value="${genre.id}"
-                th:field="*{genres}">
-        </label>
 
-        <label for="platform">Platforms:
-            <input type="checkbox" th:each="platform : ${platforms}" th:text="${platform.name}"
-                th:value="${platform.id}" th:field="*{platforms}">
-        </label>
+        <details>
+            <summary>Choose genres</summary>
+            <label th:each="genre : ${genres}">
+                <input type="checkbox" th:text="${genre.name}" th:value="${genre.id}" th:field="*{genres}">
+            </label>
+        </details>
+
+
+        <details>
+            <summary>Choose platforms</summary>
+            <label th:each="platform : ${platforms}">
+                <input type="checkbox" th:text="${platform.name}" th:value="${platform.id}" th:field="*{platforms}">
+            </label>
+        </details>
 
 
         <label for="releaseDate">Release date</label>
         <input type="date" id="releaseDate" th:field="*{releaseDate}" class="form-control" />
 
         <input type="submit" value="Save">
+        <a th:href="@{/games}">Cancel</a>
     </form>
+    
+
 </body>

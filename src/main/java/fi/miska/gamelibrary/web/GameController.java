@@ -41,6 +41,12 @@ public class GameController  {
         this.platformRepository = platformRepository;
     }
 
+    @GetMapping("/login")
+    public String loginPage(){
+        return "login";
+    }
+
+
     @GetMapping("/home")
     public String home(@RequestParam (name = "name", defaultValue = "käyttäjä") String name, Model model) {
         model.addAttribute("name", name);
@@ -73,6 +79,7 @@ public class GameController  {
     @PostMapping("/admin/games/savegame")
     public String saveGame(Game game){
         gameRepository.save(game);
+        System.out.println("SAVE: " + game.getName() + game.getInfo() + game.getDeveloper());
         return "redirect:/games";
     }
 
