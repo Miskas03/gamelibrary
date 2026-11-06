@@ -18,11 +18,15 @@
     <h2>Add game</h2>
     <form th:object="${game}" th:action="@{/admin/games/savegame}" method="post">
 
+
+        
         <label for="name">Name</label>
-        <input type="text" id="name" th:field="*{name}" />
+        <input type="text" id="name" th:field="*{name}" required />
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 
         <label for="info">Info</label>
-        <input type="text" id="info" th:field="*{info}" />
+        <input type="text" id="info" th:field="*{info}" required/>
+        <span th:if="${#fields.hasErrors('info')}" th:errors="*{info}"></span>
 
         <label for="developer">Developer</label>
         <select th:field="*{developer}">

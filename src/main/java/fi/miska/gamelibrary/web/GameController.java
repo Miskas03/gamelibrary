@@ -1,39 +1,32 @@
 package fi.miska.gamelibrary.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import fi.miska.gamelibrary.domain.Developer;
+import org.springframework.validation.BindingResult;
 import fi.miska.gamelibrary.domain.DeveloperRepository;
 import fi.miska.gamelibrary.domain.GameRepository;
-import fi.miska.gamelibrary.domain.Genre;
 import fi.miska.gamelibrary.domain.Game;
 import fi.miska.gamelibrary.domain.GenreRepository;
-import fi.miska.gamelibrary.domain.Platform;
 import fi.miska.gamelibrary.domain.PlatformRepository;
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 
-public class GameController  {
-    
+public class GameController {
+
     private GameRepository gameRepository;
     private GenreRepository genreRepository;
     private DeveloperRepository developerRepository;
     private PlatformRepository platformRepository;
 
-
-
-    public GameController(GameRepository gameRepository, GenreRepository genreRepository, DeveloperRepository developerRepository,
+    public GameController(GameRepository gameRepository, GenreRepository genreRepository,
+            DeveloperRepository developerRepository,
             PlatformRepository platformRepository) {
         this.gameRepository = gameRepository;
         this.genreRepository = genreRepository;
@@ -42,21 +35,20 @@ public class GameController  {
     }
 
     @GetMapping("/login")
-    public String loginPage(){
+    public String loginPage() {
         return "login";
     }
 
-
     @GetMapping("/home")
-    public String home(@RequestParam (name = "name", defaultValue = "käyttäjä") String name, Model model) {
+    public String home(@RequestParam(name = "name", defaultValue = "käyttäjä") String name, Model model) {
         model.addAttribute("name", name);
         return "home";
-    }   
-
+    }
 
     @GetMapping("/games")
-    public String games(Model model){ // haetaan kaikki pelit tietokannasta/repository ja viedään ne templateen avaimella games
-       model.addAttribute("games", gameRepository.findAll());
+    public String games(Model model) { // haetaan kaikki pelit tietokannasta/repository ja viedään ne templateen
+                                       // avaimella games
+        model.addAttribute("games", gameRepository.findAll());
         return "games";
     }
 
@@ -68,23 +60,28 @@ public class GameController  {
     }
 
     @GetMapping("/admin/games/addgame")
-    public String addGame(Model model){
+    public String addGame(Model model) {
         model.addAttribute("game", new Game());
         model.addAttribute("developers", developerRepository.findAll());
         model.addAttribute("genres", genreRepository.findAll());
         model.addAttribute("platforms", platformRepository.findAll());
         return "addgame";
-        }
+    }
 
     @PostMapping("/admin/games/savegame")
-    public String saveGame(Game game){
+    public String saveGame(@Valid Game game, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("developers", developerRepository.findAll());
+            model.addAttribute("genres", genreRepository.findAll());
+            model.addAttribute("platforms", platformRepository.findAll());
+            return "addgame";
+        }
         gameRepository.save(game);
-        System.out.println("SAVE: " + game.getName() + game.getInfo() + game.getDeveloper());
         return "redirect:/games";
     }
 
     @GetMapping("/admin/games/edit/{id}")
-    public String editGame(@PathVariable Long id, Model model){
+    public String editGame(@PathVariable Long id, Model model) {
         Game game = gameRepository.findById(id).orElseThrow();
         model.addAttribute("developers", developerRepository.findAll());
         model.addAttribute("genres", genreRepository.findAll());
@@ -94,26 +91,26 @@ public class GameController  {
     }
 
     @PostMapping("/admin/games/edit/{id}")
-        public String updateGame(@ModelAttribute Game game){
-            gameRepository.save(game);
-            return "redirect:/games";
+    public String updateGame(@ModelAttribute @Valid Game game, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("developers", developerRepository.findAll());
+            model.addAttribute("genres", genreRepository.findAll());
+            model.addAttribute("platforms", platformRepository.findAll());
+            return "editgame";
         }
-    
+        gameRepository.save(game);
+        return "redirect:/games";
+    }
 
     @PostMapping("/admin/games/delete/{id}")
-    public String deleteGame(@PathVariable Long id){
+    public String deleteGame(@PathVariable Long id) {
         gameRepository.deleteById(id);
         return "redirect:/games";
     }
-    
-    
-
 
     @GetMapping("/")
-    public String redirect(){
+    public String redirect() {
         return "redirect:/home";
     }
 
-    
-    
 }

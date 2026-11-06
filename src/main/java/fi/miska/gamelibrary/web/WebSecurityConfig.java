@@ -1,17 +1,10 @@
 package fi.miska.gamelibrary.web;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -25,7 +18,7 @@ public class WebSecurityConfig {
 	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeHttpRequests( authorize -> authorize        // / and /home paths are configured to not
-				.requestMatchers("/games/**", "/css/**", "/h2-console/**").permitAll()    // require any authentication.
+				.requestMatchers("/games/**", "/", "/home", "/css/**", "/h2-console/**").permitAll()    // require any authentication.
 				.requestMatchers("/admin/**").hasAuthority("ADMIN")
 				.requestMatchers(HttpMethod.DELETE, "/api/**").hasAuthority("ADMIN")
 				.anyRequest().authenticated()                 // All other paths must be authenticated.

@@ -12,6 +12,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity // Tämä kertoo JPA että tee tästä taulu
 public class Game {
@@ -19,25 +22,32 @@ public class Game {
     @Id // Tästä tulee pääavain
     @GeneratedValue(strategy = GenerationType.AUTO) // Numeroi automaattisesti id:t
     private Long id;
+
+    @NotBlank(message = "Name is required")
     private String name;
+
+    @NotBlank
+    @Size(max = 255, message = "Info can be at most 255 characters")
     private String info;
 
-    @DateTimeFormat(iso =DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate releaseDate;
 
     // Yksi peli voi kuulua moneen genreen
     @ManyToMany
     private List<Genre> genres;
     // Yksi peli voi olla monella platformilla
+
     @ManyToMany
     private List<Platform> platforms;
+
+    @NotNull(message = "Set developer or unknown")
     @ManyToOne
     private Developer developer;
 
     // Konstruktorit
     public Game() { // JPA tekee tyhjän olion ja täyttää kentät tietokannan tiedoilla
     }
-
 
     // Valmiin testidatan luonti, id puuttuu sillä tietokanta antaa sen tallentaessa
     public Game(String name, Developer developer, String info, LocalDate releaseDate, List<Platform> platforms,

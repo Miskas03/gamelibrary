@@ -10,7 +10,7 @@
 
 <body>
 
-    <form sec:authorize="isAuthenticated()" th:action="@{/admin/games/addgame}" method="get">
+    <form sec:authorize="hasAuthority('ADMIN')" th:action="@{/admin/games/addgame}" method="get">
             <button type="get">Add game</button>
         </form>
 
