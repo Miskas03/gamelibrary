@@ -26,7 +26,7 @@ public class Game {
     @NotBlank(message = "Name is required")
     private String name;
 
-    @NotBlank
+    @Size (min = 5, message = "Info needs to be atleast 5 characters")
     @Size(max = 255, message = "Info can be at most 255 characters")
     private String info;
 

@@ -19,43 +19,48 @@
     <form th:object="${game}" th:action="@{/admin/games/savegame}" method="post">
 
 
-        
-        <label for="name">Name</label>
-        <input type="text" id="name" th:field="*{name}" required />
-        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" th:field="*{name}" required />
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 
-        <label for="info">Info</label>
-        <input type="text" id="info" th:field="*{info}" required/>
-        <span th:if="${#fields.hasErrors('info')}" th:errors="*{info}"></span>
+            <label for="info">Info</label>
+            <input type="text" id="info" th:field="*{info}" required />
+            <span th:if="${#fields.hasErrors('info')}" th:errors="*{info}"></span>
 
-        <label for="developer">Developer</label>
-        <select th:field="*{developer}">
-            <option th:each="developer : ${developers}" th:value="${developer.id}" th:text="${developer.name}"></option>
-        </select>
-
-
-        <details>
-            <summary>Choose genres</summary>
-            <label th:each="genre : ${genres}">
-                <input type="checkbox" th:text="${genre.name}" th:value="${genre.id}" th:field="*{genres}">
-            </label>
-        </details>
-
-
-        <details>
-            <summary>Choose platforms</summary>
-            <label th:each="platform : ${platforms}">
-                <input type="checkbox" th:text="${platform.name}" th:value="${platform.id}" th:field="*{platforms}">
-            </label>
-        </details>
+        </div>
+        <div>
+            <label for="developer">Developer</label>
+            <select th:field="*{developer}">
+                <option th:each="developer : ${developers}" th:value="${developer.id}" th:text="${developer.name}">
+                </option>
+            </select>
+        </div>
+        <div>
+            <details>
+                <summary>Choose genres</summary>
+                <label th:each="genre : ${genres}">
+                    <input type="checkbox" th:text="${genre.name}" th:value="${genre.id}" th:field="*{genres}">
+                </label>
+            </details>
 
 
-        <label for="releaseDate">Release date</label>
-        <input type="date" id="releaseDate" th:field="*{releaseDate}" class="form-control" />
+            <details>
+                <summary>Choose platforms</summary>
+                <label th:each="platform : ${platforms}">
+                    <input type="checkbox" th:text="${platform.name}" th:value="${platform.id}" th:field="*{platforms}">
+                </label>
+            </details>
+        </div>
+        <div>
+            <label for="releaseDate">Release date</label>
+            <input type="date" id="releaseDate" th:field="*{releaseDate}" class="form-control" />
 
-        <input type="submit" value="Save">
-        <a th:href="@{/games}">Cancel</a>
+            <div>
+                <input type="submit" value="Save">
+                <a th:href="@{/games}">Cancel</a>
+            </div>
     </form>
-    
+    </div>
 
 </body>

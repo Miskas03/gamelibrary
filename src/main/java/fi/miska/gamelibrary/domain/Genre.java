@@ -2,6 +2,8 @@ package fi.miska.gamelibrary.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +21,7 @@ public class Genre {
 
     // Genreen kuuluu monta peliä
     @ManyToMany(mappedBy = "genres")
+    @JsonIgnore 
     private List<Game> games;
 
     // Konstruktorit

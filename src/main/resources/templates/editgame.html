@@ -35,6 +35,7 @@
                 <input type="checkbox" th:text="${platform.name}" th:value="${platform.id}" th:field="*{platforms}">
             </label>
         </details>
+        <input type="hidden" th:field="*{id}">
         <button type="submit">Save</button>
         <a th:href="@{/games}">Cancel</a>
 
