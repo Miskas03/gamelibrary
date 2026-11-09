@@ -23,7 +23,7 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PATCH, "/api/**").hasAuthority("ADMIN")
-                .requestMatchers("/games/**", "/", "/home", "/api/**", "/allGames/**", "/css/**", "/h2-console/**").permitAll()    // require any authentication.
+                .requestMatchers("/games/**", "/", "/home", "/api/**", "/allGames/**", "/css/**", "/h2-console/**").permitAll()
 				.anyRequest().authenticated()                 
 			)                                             
 		.formLogin( formlogin -> formlogin                   
