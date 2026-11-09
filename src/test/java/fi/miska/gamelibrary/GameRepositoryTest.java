@@ -19,6 +19,8 @@ import fi.miska.gamelibrary.domain.GenreRepository;
 import fi.miska.gamelibrary.domain.Platform;
 import fi.miska.gamelibrary.domain.PlatformRepository;
 
+
+// Käynnistetään vain tietokanta osuus koodista.
 @DataJpaTest
 public class GameRepositoryTest {
 

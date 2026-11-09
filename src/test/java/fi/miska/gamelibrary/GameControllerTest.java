@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 // Testataan controllerin ja securityn toimintaa.
 @SpringBootTest // Käynnistää sovelluksen.
-@AutoConfigureMockMvc // Lähettää pyynnöt ilman oikeaa selainta.
+@AutoConfigureMockMvc // Lähettää pyynnöt "valeselaimessa" ilman oikeaa selainta.
 public class GameControllerTest {
 
     @Autowired
