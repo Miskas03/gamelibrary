@@ -1,6 +1,5 @@
 package fi.miska.gamelibrary.domain;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,17 +22,21 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.AUTO) // Numeroi automaattisesti id:t
     private Long id;
 
+    // Nimi on pakollinen
     @NotBlank(message = "Name is required")
     private String name;
-
+ 
+    // Infon pituus 5-255 merkkiä. 255 on tietokannan String oletuspituus.
     @Size (min = 5, message = "Info needs to be atleast 5 characters")
     @Size(max = 255, message = "Info can be at most 255 characters")
     private String info;
 
+    // Lomakkeen päivämäärä muutetaan LocalDateksi. Se on aikamuoto ilman kellonaikaa tai aikavyöhykettä.
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate releaseDate;
 
-    // Yksi peli voi kuulua moneen genreen
+    // Game omistaa suhteet genreihin, ja platformeihin. Näistä syntyy JPA kautta liitostaulut,
+    // game_genres, game_platforms.
     @ManyToMany
     private List<Genre> genres;
     // Yksi peli voi olla monella platformilla
@@ -41,6 +44,7 @@ public class Game {
     @ManyToMany
     private List<Platform> platforms;
 
+    // Pelillä on yksi developer joka on pakollinen. game tauluun tulee foreign key developer_id.
     @NotNull(message = "Set developer or unknown")
     @ManyToOne
     private Developer developer;

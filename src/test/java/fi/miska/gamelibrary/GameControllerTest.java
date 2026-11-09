@@ -12,8 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
-import fi.miska.gamelibrary.web.GameController;
-
 // Testataan controllerin ja securityn toimintaa.
 @SpringBootTest // Käynnistää sovelluksen.
 @AutoConfigureMockMvc // Lähettää pyynnöt ilman oikeaa selainta.
@@ -21,9 +19,6 @@ public class GameControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    GameController gameController;
 
     @Test // Testataan että games sivulle pääsee ilman kirjautumista.
     void gamesPageIsPublic() throws Exception {
@@ -44,17 +39,26 @@ public class GameControllerTest {
     }
 
     @Test // Testataan että Adminina kirjautuneena pääsee addgame sivulle
-    @WithMockUser (authorities = "ADMIN") // "Kirjaudutaan" admin käyttäjänä
-    void addgameAsAdmin() throws Exception{
+    @WithMockUser(authorities = "ADMIN") // "Kirjaudutaan" admin käyttäjänä
+    void addgameAsAdmin() throws Exception {
         // Avataan addgame sivu admin käyttäjänä.
         mockMvc.perform(get("/admin/games/addgame"))
-        // Tarkistetaan että vastauskoodi on 200 eli isOk eli admin pääsee sivulle
-        .andExpect(status().isOk())
-        
-        // Tarkistetaan että controller palautti addgame templaten.
-        .andExpect(view().name("addgame"))
+                // Tarkistetaan että vastauskoodi on 200 eli isOk eli admin pääsee sivulle
+                .andExpect(status().isOk())
 
-        // Tarkistetaan että modelissa on kaikki mitä addgame sivu tarvitsee.
-        .andExpect(model().attributeExists("game", "developers", "genres", "platforms"));
+                // Tarkistetaan että controller palautti addgame templaten.
+                .andExpect(view().name("addgame"))
+
+                // Tarkistetaan että modelissa on kaikki mitä addgame sivu tarvitsee.
+                .andExpect(model().attributeExists("game", "developers", "genres", "platforms"));
+    }
+
+    @Test // Testataan User käyttäjänä päästä pelin lisäys sivulle.
+    @WithMockUser(authorities = "USER") // Kirjaudutaan user käyttäjänä.
+    void addGameAsUser() throws Exception {
+        // Avataan addgame sivu user käyttäjänä.
+        mockMvc.perform(get("/admin/games/addgame"))
+                // Tarkistetaan että vastaus on forbidden eli koodi 403.
+                .andExpect(status().isForbidden());
     }
 }

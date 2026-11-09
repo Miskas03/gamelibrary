@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+
+// Käyttäjä entiteetti kirjautumista varten. taulun nimeksi users sillä User on sql:ssä varattu termi.
 @Entity(name = "users")
 public class User {
 
@@ -14,12 +16,15 @@ public class User {
     @Column (name="id", nullable = false, updatable = false)
     private Long id;
 
+    //unique: kahdella käyttäjällä ei voi olla samaa käyttäjätunnusta.
     @Column (name = "username", nullable = false, unique = true)
     private String username;
 
+    // Tallennetaan BCrypt-hash, ei koskaan selväkielistä salasanaa.
     @Column (name = "password", nullable = false)
     private String passwordHash;
 
+    //Rooli ilman ROLE_ alkuliitettä, joten securityssä käytetään hasAuthority.
     @Column (name = "role", nullable = false)
     private String role;
 

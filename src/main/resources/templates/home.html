@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>Home</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	</head>
-	<body>
-		<h1 th:text="'Welcome to the home page, ' + ${name}">Home page</h1>
-        <form th:action="@{/games}" method="get">
-            <button type="get">Browse games</button>
-        </form>
-	</body>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<title>Home</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<form sec:authorize="!isAuthenticated()" th:action="@{/login}" method="get">
+		<input type="submit" value="Sign in" />
+	</form>
+
+	<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign out" />
+	</form>
+
+	<h1 sec:authorize="isAuthenticated()">Welcome to the home page, <span sec:authentication="name"></span></h1>
+	<form th:action="@{/games}" method="get">
+		<button type="get">Browse games</button>
+	</form>
+
+	<h1 sec:authorize="!isAuthenticated()">Welcome to the home page, click HERE(WIP) to make a new account</h1>
+	<form th:action="@{/games}" method="get">
+		<button type="get">Browse games</button>
+	</form>
+</body>
+
 </html>

@@ -1,63 +1,72 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <title>Games</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    
+
 </head>
 
 <body>
 
+
+    <form th:action="@{/home}" method="get">
+        <button type="get">Home page</button>
+    </form>
+
     <form sec:authorize="hasAuthority('ADMIN')" th:action="@{/admin/games/addgame}" method="get">
-            <button type="get">Add game</button>
-        </form>
+        <button type="get">Add game</button>
+    </form>
 
     <form sec:authorize="!isAuthenticated()" th:action="@{/login}" method="get">
-        <input type ="submit" value="Sign in"/>
+        <input type="submit" value="Sign in" />
     </form>
 
     <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign out"/>
-        </form>
+        <input type="submit" value="Sign out" />
+    </form>
 
+    <h4 sec:authorize="isAuthenticated()">Logged in as <span sec:authentication="name"></span></h4>
     <h1 th:text="'Game library'">Game library</h1>
+
     <table cellpadding="10">
-    
-
-        <thead>
-            <tr>
-                <th>Game</th>
-                <th>Info</th>
-                <th>Developer</th>
-                <th>Release Date</th>
-                <th>Genre</th>
-                <th>Platform</th>
-            </tr>
-        </thead>
+        <table cellpadding="10">
 
 
-        <tbody>
-            <tr th:each="game : ${games}">
-                <td><a th:href="@{/games/{id}(id=${game.id})}" th:text="${game.name}"></a></td>
-                <td th:text="${game.info}"></td>
-                <td th:text="${game.developer?.name}"></td>
-                <td th:text="${game.releaseDate}"></td>
-
-                <td>    <!-- Tässä käydään genres listalta läpi genret jotta löydetään kaikki pelin genret, -->
-                    <span th:each="genre : ${game.genres}" th:text="${genre.name} + ' '"></span>
-                </td>
-
-                <td>
-                    <span th:each="platform : ${game.platforms}" th:text="${platform.name} + ' '"></span>
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Game</th>
+                    <th>Info</th>
+                    <th>Developer</th>
+                    <th>Release Date</th>
+                    <th>Genre</th>
+                    <th>Platform</th>
+                </tr>
+            </thead>
 
 
-        </tbody>
+            <tbody>
+                <tr th:each="game : ${games}">
+                    <td><a th:href="@{/games/{id}(id=${game.id})}" th:text="${game.name}"></a></td>
+                    <td th:text="${game.info}"></td>
+                    <td th:text="${game.developer?.name}"></td>
+                    <td th:text="${game.releaseDate}"></td>
 
-    </table>
+                    <td> <!-- Tässä käydään genres listalta läpi genret jotta löydetään kaikki pelin genret, -->
+                        <span th:each="genre : ${game.genres}" th:text="${genre.name} + ' '"></span>
+                    </td>
+
+                    <td>
+                        <span th:each="platform : ${game.platforms}" th:text="${platform.name} + ' '"></span>
+                    </td>
+                </tr>
+
+
+            </tbody>
+
+        </table>
 </body>
 
 </html>

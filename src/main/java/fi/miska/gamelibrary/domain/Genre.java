@@ -19,8 +19,9 @@ public class Genre {
     private String name;
     private String description;
 
-    // Genreen kuuluu monta peliä
+    // mappedby = genres: Game omistaa suhteen.
     @ManyToMany(mappedBy = "genres")
+    // JsonIgnore: genren pelilistaa ei näytetä JSONissa jottei tule loputonta silmukkaa.
     @JsonIgnore 
     private List<Game> games;
 

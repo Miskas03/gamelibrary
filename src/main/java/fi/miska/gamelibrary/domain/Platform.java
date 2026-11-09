@@ -20,8 +20,9 @@ public class Platform {
     private String name;
     private String description;
 
-    // Platformille on monta peliä
+    // mappedby = platforms: Game omistaa suhteen
     @ManyToMany(mappedBy = "platforms")
+    // JsonIgnore: platformin pelilistaa ei näytetä JSONissa, muuten tulee loputon silmukka.
     @JsonIgnore 
     private List<Game> games;
 
