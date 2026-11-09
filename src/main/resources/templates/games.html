@@ -32,41 +32,39 @@
     <h1 th:text="'Game library'">Game library</h1>
 
     <table cellpadding="10">
-        <table cellpadding="10">
+
+        <thead>
+            <tr>
+                <th>Game</th>
+                <th>Info</th>
+                <th>Developer</th>
+                <th>Release Date</th>
+                <th>Genre</th>
+                <th>Platform</th>
+            </tr>
+        </thead>
 
 
-            <thead>
-                <tr>
-                    <th>Game</th>
-                    <th>Info</th>
-                    <th>Developer</th>
-                    <th>Release Date</th>
-                    <th>Genre</th>
-                    <th>Platform</th>
-                </tr>
-            </thead>
+        <tbody>
+            <tr th:each="game : ${games}">
+                <td><a th:href="@{/games/{id}(id=${game.id})}" th:text="${game.name}"></a></td>
+                <td th:text="${game.info}"></td>
+                <td th:text="${game.developer?.name}"></td>
+                <td th:text="${game.releaseDate}"></td>
+
+                <td> <!-- Tässä käydään genres listalta läpi genret jotta löydetään kaikki pelin genret, -->
+                    <span th:each="genre : ${game.genres}" th:text="${genre.name} + ' '"></span>
+                </td>
+
+                <td>
+                    <span th:each="platform : ${game.platforms}" th:text="${platform.name} + ' '"></span>
+                </td>
+            </tr>
 
 
-            <tbody>
-                <tr th:each="game : ${games}">
-                    <td><a th:href="@{/games/{id}(id=${game.id})}" th:text="${game.name}"></a></td>
-                    <td th:text="${game.info}"></td>
-                    <td th:text="${game.developer?.name}"></td>
-                    <td th:text="${game.releaseDate}"></td>
+        </tbody>
 
-                    <td> <!-- Tässä käydään genres listalta läpi genret jotta löydetään kaikki pelin genret, -->
-                        <span th:each="genre : ${game.genres}" th:text="${genre.name} + ' '"></span>
-                    </td>
-
-                    <td>
-                        <span th:each="platform : ${game.platforms}" th:text="${platform.name} + ' '"></span>
-                    </td>
-                </tr>
-
-
-            </tbody>
-
-        </table>
+    </table>
 </body>
 
 </html>

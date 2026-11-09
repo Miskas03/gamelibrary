@@ -58,7 +58,7 @@ public class GamelibraryApplication {
 			Platform xboxSeriesS = platformRepository.save(new Platform("XBOX SERIES S"));
 
 			// Unknown developer vaihtoehtona jos developeriä ei tiedetä mutta halutaan tallentaa peli.
-			Developer unknowndeveloper = developerRepository.save(new Developer("Unknown developer"));
+			Developer unknownDeveloper = developerRepository.save(new Developer("Unknown developer"));
 			Developer fromSoftware = developerRepository.save(new Developer("fromSoftware"));
 			Developer electronicArts = developerRepository.save(new Developer("Electronic Arts"));
 

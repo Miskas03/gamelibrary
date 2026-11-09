@@ -20,8 +20,9 @@ public class Developer {
     private String name;
     private String description;
 
-    // Developerilla voi olla monta peliä
+    // mappedBy developer: Game omistaa suhteen
     @OneToMany (mappedBy = "developer")
+    // JsonIgnore: developerin pelilistaa ei näytetä JSONissa jottei tule loputonta silmukkaa.
     @JsonIgnore
     private List<Game> games;
 

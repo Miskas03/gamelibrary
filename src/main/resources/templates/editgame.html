@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -10,31 +10,44 @@
 <body>
     <h1>Edit Game</h1>
     <form th:action="@{/admin/games/edit/{id}(id=${game.id})}" th:object="${game}" method="post">
-        <label for="name">Name: <input type="text" th:field="*{name}"></label>
-        <label for="info">Info: <input type="text" th:field="*{info}"></label>
-        <span th:if="${#fields.hasErrors('info')}" th:errors="*{info}"></span>
-        <label for="developer">Developer:</label>
-        <select th:field="*{developer}">
-            <option th:each="developer : ${developers}" th:value="${developer.id}" th:text="${developer.name}">
-            </option>
-        </select>
-        <label for="releaseDate">Release date</label>
-        <input type="date" id="releaseDate" th:field="*{releaseDate}"/>
 
-        <details>
-            <summary>Choose genres</summary>
-            <label th:each="genre : ${genres}">
-                <input type="checkbox" th:text="${genre.name}" th:value="${genre.id}" th:field="*{genres}">
-            </label>
-        </details>
+        <div>
+            <label for="name">Name: <input type="text" th:field="*{name}" required></label>
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            <label for="info">Info: <input type="text" th:field="*{info}" required></label>
+            <span th:if="${#fields.hasErrors('info')}" th:errors="*{info}"></span>
+        </div>
+
+        <div>
+            <label for="developer">Developer:</label>
+            <select th:field="*{developer}">
+                <option th:each="developer : ${developers}" th:value="${developer.id}" th:text="${developer.name}">
+                </option>
+            </select>
+        </div>
+
+        <div>
+            <details>
+                <summary>Choose genres</summary>
+                <label th:each="genre : ${genres}">
+                    <input type="checkbox" th:text="${genre.name}" th:value="${genre.id}" th:field="*{genres}">
+                </label>
+            </details>
 
 
-        <details>
-            <summary>Choose platforms</summary>
-            <label th:each="platform : ${platforms}">
-                <input type="checkbox" th:text="${platform.name}" th:value="${platform.id}" th:field="*{platforms}">
-            </label>
-        </details>
+            <details>
+                <summary>Choose platforms</summary>
+                <label th:each="platform : ${platforms}">
+                    <input type="checkbox" th:text="${platform.name}" th:value="${platform.id}" th:field="*{platforms}">
+                </label>
+            </details>
+        </div>
+
+        <div>
+            <label for="releaseDate">Release date</label>
+            <input type="date" id="releaseDate" th:field="*{releaseDate}" />
+        </div>
+
         <input type="hidden" th:field="*{id}">
         <button type="submit">Save</button>
         <a th:href="@{/games}">Cancel</a>

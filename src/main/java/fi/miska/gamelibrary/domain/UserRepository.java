@@ -9,8 +9,9 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 //jossa olisivat käyttäjätunnukset ja salasanahashit.
 @RepositoryRestResource (exported = false)
 
-// Hakee käyttän käyttäjätunnuksella kirjautumista varten (UserDetailServiceImpl).
+
 // Palauttaa yhden käyttäjän tai null koska usernamet ovat uniikkeja.
 public interface UserRepository extends CrudRepository<User, Long>{
+    // Hakee käyttän käyttäjätunnuksella kirjautumista varten (UserDetailServiceImpl).
     User findByUsername(String username);
 }
