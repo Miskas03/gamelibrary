@@ -7,8 +7,10 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
@@ -26,6 +28,25 @@ public class GameControllerTest {
         mockMvc.perform(get("/games"))
                 // Tarkistetaan että vastauskoodi on 200 eli isOk.
                 .andExpect(status().isOk());
+    }
+
+    @Test // Testataan että api/games sivulle pääsee ilman kirjautumista.
+    void apiGamesIsPublic() throws Exception {
+        // Lähetetään GET pyyntö /api/games osoitteeseen, kirjautumattomana käyttäjänä.
+        mockMvc.perform(get("/api/games"))
+                // Tarkistetaan että vastauskoodi on 200 eli isOk.
+                .andExpect(status().isOk());
+    }
+
+    @Test // Testataan että api/games sivulle ei pääse lähettämään post pyyntöjä user
+          // käyttäjänä.
+    @WithMockUser(authorities = "USER") // "Kirjaudutan" user käyttäjänä
+    void apiGamesUserCantPost() throws Exception {
+        // Lähetetään POST pyyntö /api/games osoitteeseen, user käyttäjänä.
+        mockMvc.perform(post("/api/games").with(csrf())) // Lisätään pyyntöön csrf token, niinkuin thymeleaf lisäisi
+                                                         // oikeisiin lomakkeisiin.
+                // Tarkistetaan että vastauskoodi on 403 eli isForbidden.
+                .andExpect(status().isForbidden());
     }
 
     @Test // Testataan että kirjautumattomana, admin osoite ohjaa login sivulle.
