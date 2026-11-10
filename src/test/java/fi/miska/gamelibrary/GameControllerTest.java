@@ -55,7 +55,7 @@ public class GameControllerTest {
         mockMvc.perform(get("/admin/games/addgame"))
                 // Tarkastetaan että vastaus on uudelleenohjaus.
                 .andExpect(status().is3xxRedirection())
-                // Tarkistetaan että ohjaus menee login sivulle.
+                // Tarkistetaan että ohjaus menee login sivulleG.
                 .andExpect(redirectedUrl("/login"));
     }
 

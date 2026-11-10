@@ -48,6 +48,8 @@
             <input type="date" id="releaseDate" th:field="*{releaseDate}" />
         </div>
 
+        <!--Piilokenttä vie pelin id:n mukana,
+         jotta päivitetään vanha peli eikä luoda uutta-->
         <input type="hidden" th:field="*{id}">
         <button type="submit">Save</button>
         <a th:href="@{/games}">Cancel</a>

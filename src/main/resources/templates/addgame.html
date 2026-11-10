@@ -16,6 +16,7 @@
         <button type="submit">Back to Games</button>
     </form>
     <h2>Add game</h2>
+    <!--th:object sitoo Modelin game olioon-->
     <form th:object="${game}" th:action="@{/admin/games/savegame}" method="post">
 
 
@@ -31,6 +32,7 @@
         </div>
         <div>
             <label for="developer">Developer</label>
+            <!-- Lomake lähettää developerin id:n ja spring muutaa sen Developer olioksi-->
             <select th:field="*{developer}">
                 <option th:each="developer : ${developers}" th:value="${developer.id}" th:text="${developer.name}">
                 </option>

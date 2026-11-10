@@ -16,18 +16,23 @@
         <button type="get">Home page</button>
     </form>
 
+
+    <!--Admin napit näkyvissä vain admin kirjautuneille-->
     <form sec:authorize="hasAuthority('ADMIN')" th:action="@{/admin/games/addgame}" method="get">
         <button type="get">Add game</button>
     </form>
 
+    <!-- Kirjautumis nappi näkyvissä jos ei ole kirjautunut sisään-->
     <form sec:authorize="!isAuthenticated()" th:action="@{/login}" method="get">
         <input type="submit" value="Sign in" />
     </form>
 
+    <!-- Uloskirjautumis nappi näkyvissä jos on kirjautunut sisään-->
     <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
         <input type="submit" value="Sign out" />
     </form>
 
+    <!-- Jos on kirjautunut sisään, näytetään pieni logged in teksti-->
     <h4 sec:authorize="isAuthenticated()">Logged in as <span sec:authentication="name"></span></h4>
     <h1 th:text="'Game library'">Game library</h1>
 
@@ -45,10 +50,12 @@
         </thead>
 
 
-        <tbody>
+        <tbody> <!-- Käyydään läpi Modelissa oleva games-lista, yksi rivi per peli-->
             <tr th:each="game : ${games}">
+                <!-- Linkki pelin tietosivulle, painaessa pelin nimestä-->
                 <td><a th:href="@{/games/{id}(id=${game.id})}" th:text="${game.name}"></a></td>
                 <td th:text="${game.info}"></td>
+                <!-- Jos dev puuttuu, näytetään tyhjä sivu eikä sivu kaadu-->
                 <td th:text="${game.developer?.name}"></td>
                 <td th:text="${game.releaseDate}"></td>
 

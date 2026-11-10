@@ -7,16 +7,20 @@
 </head>
 
 <body>
+	<!-- Kirjautumis nappi näkyvissä jos ei ole kirjautunut sisään-->
 	<form sec:authorize="!isAuthenticated()" th:action="@{/login}" method="get">
 		<input type="submit" value="Sign in" />
 	</form>
 
+	<!-- Uloskirjautumis nappi näkyvissä jos on kirjautunut sisään-->
 	<form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
 		<input type="submit" value="Sign out" />
 	</form>
 
+	<!-- Welcome viesti jos on kirjautunut sisään + käyttäjän nimi-->
 	<h1 sec:authorize="isAuthenticated()">Welcome to the home page, <span sec:authentication="name"></span></h1>
 
+	<!-- Welcome viesti jos ei ole kirjautunut sisään-->
 	<h1 sec:authorize="!isAuthenticated()">Welcome to the home page, Guest</h1>
 	<form th:action="@{/games}" method="get">
 		<button type="get">Browse games</button>
